@@ -1,0 +1,169 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="FAKE_BANKModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Account">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Guid" Nullable="false" />
+    <Property Name="beginDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="balance" Type="Double" Nullable="false" />
+    <Property Name="accountType" Type="Guid" Nullable="false" />
+    <Property Name="idCustomer" Type="Guid" Nullable="false" />
+    <NavigationProperty Name="AccountType1" Relationship="Self.fk_account_accountTYpe" FromRole="Account" ToRole="AccountType" />
+    <NavigationProperty Name="Card" Relationship="Self.fk_account_card" FromRole="Account" ToRole="Card" />
+    <NavigationProperty Name="Customer" Relationship="Self.fk_customer_account" FromRole="Account" ToRole="Customer" />
+    <NavigationProperty Name="Transactions" Relationship="Self.fk_transactionD_account" FromRole="Account" ToRole="Transactions" />
+    <NavigationProperty Name="Transactions1" Relationship="Self.fk_transactionS_account" FromRole="Account" ToRole="Transactions" />
+  </EntityType>
+  <EntityType Name="AccountType">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Guid" Nullable="false" />
+    <Property Name="nameType" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="Accounts" Relationship="Self.fk_account_accountTYpe" FromRole="AccountType" ToRole="Account" />
+  </EntityType>
+  <EntityType Name="Card">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Guid" Nullable="false" />
+    <Property Name="nip" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="expirationDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="securityCode" Type="Int32" Nullable="false" />
+    <Property Name="cardType" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Account" Relationship="Self.fk_account_card" FromRole="Card" ToRole="Account" />
+  </EntityType>
+  <EntityType Name="Customer">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Guid" Nullable="false" />
+    <Property Name="username" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="email" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="phoneNumber" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="firstLastName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="secondLastName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="gender" Type="Boolean" Nullable="false" />
+    <Property Name="rfc" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="birthDate" Type="DateTime" Nullable="false" Precision="3" />
+    <NavigationProperty Name="Accounts" Relationship="Self.fk_customer_account" FromRole="Customer" ToRole="Account" />
+  </EntityType>
+  <EntityType Name="preRegister">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Guid" Nullable="false" />
+    <Property Name="username" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="firstLastName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="secondLastName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="phoneNumber" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="email" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Transaction">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Guid" Nullable="false" />
+    <Property Name="date" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="idSourceAccount" Type="Guid" Nullable="false" />
+    <Property Name="idDestinationAccount" Type="Guid" Nullable="false" />
+    <Property Name="amount" Type="Double" Nullable="false" />
+    <NavigationProperty Name="Account" Relationship="Self.fk_transactionD_account" FromRole="Transactions" ToRole="Account" />
+    <NavigationProperty Name="Account1" Relationship="Self.fk_transactionS_account" FromRole="Transactions" ToRole="Account" />
+  </EntityType>
+  <Association Name="fk_account_accountTYpe">
+    <End Role="AccountType" Type="Self.AccountType" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Account" Type="Self.Account" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AccountType">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Account">
+        <PropertyRef Name="accountType" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_account_card">
+    <End Role="Card" Type="Self.Card" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Account" Type="Self.Account" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="Card">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Account">
+        <PropertyRef Name="id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_customer_account">
+    <End Role="Customer" Type="Self.Customer" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Account" Type="Self.Account" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Customer">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Account">
+        <PropertyRef Name="idCustomer" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_transactionD_account">
+    <End Role="Account" Type="Self.Account" Multiplicity="1" />
+    <End Role="Transactions" Type="Self.Transaction" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Account">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Transactions">
+        <PropertyRef Name="idDestinationAccount" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_transactionS_account">
+    <End Role="Account" Type="Self.Account" Multiplicity="1" />
+    <End Role="Transactions" Type="Self.Transaction" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Account">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Transactions">
+        <PropertyRef Name="idSourceAccount" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="FAKE_BANKEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Accounts" EntityType="Self.Account" />
+    <EntitySet Name="AccountTypes" EntityType="Self.AccountType" />
+    <EntitySet Name="Cards" EntityType="Self.Card" />
+    <EntitySet Name="Customers" EntityType="Self.Customer" />
+    <EntitySet Name="preRegisters" EntityType="Self.preRegister" />
+    <EntitySet Name="Transactions" EntityType="Self.Transaction" />
+    <AssociationSet Name="fk_account_accountTYpe" Association="Self.fk_account_accountTYpe">
+      <End Role="AccountType" EntitySet="AccountTypes" />
+      <End Role="Account" EntitySet="Accounts" />
+    </AssociationSet>
+    <AssociationSet Name="fk_account_card" Association="Self.fk_account_card">
+      <End Role="Card" EntitySet="Cards" />
+      <End Role="Account" EntitySet="Accounts" />
+    </AssociationSet>
+    <AssociationSet Name="fk_customer_account" Association="Self.fk_customer_account">
+      <End Role="Customer" EntitySet="Customers" />
+      <End Role="Account" EntitySet="Accounts" />
+    </AssociationSet>
+    <AssociationSet Name="fk_transactionD_account" Association="Self.fk_transactionD_account">
+      <End Role="Account" EntitySet="Accounts" />
+      <End Role="Transactions" EntitySet="Transactions" />
+    </AssociationSet>
+    <AssociationSet Name="fk_transactionS_account" Association="Self.fk_transactionS_account">
+      <End Role="Account" EntitySet="Accounts" />
+      <End Role="Transactions" EntitySet="Transactions" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

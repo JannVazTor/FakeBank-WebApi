@@ -1,0 +1,10 @@
+C:\Users\JANN\Documents\Visual Studio 2015\Projects\FakeBank-WebApi\FakeBank.Data\bin\Release\FakeBank.Data.exe.config
+C:\Users\JANN\Documents\Visual Studio 2015\Projects\FakeBank-WebApi\FakeBank.Data\bin\Release\FakeBank.Data.exe
+C:\Users\JANN\Documents\Visual Studio 2015\Projects\FakeBank-WebApi\FakeBank.Data\bin\Release\FakeBank.Data.pdb
+C:\Users\JANN\Documents\Visual Studio 2015\Projects\FakeBank-WebApi\FakeBank.Data\bin\Release\EntityFramework.dll
+C:\Users\JANN\Documents\Visual Studio 2015\Projects\FakeBank-WebApi\FakeBank.Data\bin\Release\EntityFramework.SqlServer.dll
+C:\Users\JANN\Documents\Visual Studio 2015\Projects\FakeBank-WebApi\FakeBank.Data\bin\Release\EntityFramework.xml
+C:\Users\JANN\Documents\Visual Studio 2015\Projects\FakeBank-WebApi\FakeBank.Data\bin\Release\EntityFramework.SqlServer.xml
+C:\Users\JANN\Documents\Visual Studio 2015\Projects\FakeBank-WebApi\FakeBank.Data\obj\Release\FakeBank.Data.csprojResolveAssemblyReference.cache
+C:\Users\JANN\Documents\Visual Studio 2015\Projects\FakeBank-WebApi\FakeBank.Data\obj\Release\FakeBank.Data.exe
+C:\Users\JANN\Documents\Visual Studio 2015\Projects\FakeBank-WebApi\FakeBank.Data\obj\Release\FakeBank.Data.pdb
