@@ -41,5 +41,37 @@ namespace FakeBank.Data.Business.Services
                 throw ex;
             }
         }
+
+        public PreRegistration GetById(Guid id)
+        {
+            try
+            {
+                using (var db = new FAKE_BANKEntities())
+                {
+                    var preRegistrationRepository = new PreRegistrationRepository(db);
+                    return preRegistrationRepository.GetById(id);
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public List<PreRegistration> GetAll()
+        {
+            try
+            {
+                using (var db = new FAKE_BANKEntities())
+                {
+                    var preRegistrationRepository = new PreRegistrationRepository(db);
+                    return preRegistrationRepository.GetAll();
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
     }
 }

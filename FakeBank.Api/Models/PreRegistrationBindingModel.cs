@@ -9,18 +9,18 @@ namespace FakeBank.Models
     public class PreRegistrationBindingModel
     {
         [Required]
-        public System.Guid id { get; set; }
+        public System.Guid Id { get; set; }
         [Required]
-        public string username { get; set; }
+        public string UserName { get; set; }
         [Required]
-        public string firstLastName { get; set; }
+        public string FirstLastName { get; set; }
         [Required]
-        public string secondLastName { get; set; }
+        public string SecondLastName { get; set; }
         [Required]
-        public string phoneNumber { get; set; }
+        public string PhoneNumber { get; set; }
         [Required]
-        public string email { get; set; }
+        public string Email { get; set; }
         [Required]
-        public Guid idAccounType { get; set; }
+        public Guid IdAccounType { get; set; }
     }
 }

@@ -14,8 +14,9 @@ namespace FakeBank.Data.Entities
     
     public partial class Token
     {
-        public System.Guid id { get; set; }
-        public System.Guid token1 { get; set; }
+        public System.Guid Id { get; set; }
+        public System.Guid Token1 { get; set; }
+        public bool Active { get; set; }
     
         public virtual Account Account { get; set; }
     }

@@ -59,10 +59,24 @@
   <ItemGroup>
     <Compile Include="Business\GenericMethods.cs" />
     <Compile Include="Business\IGenericRepository.cs" />
+    <Compile Include="Business\Repositories\AccountRepository.cs" />
+    <Compile Include="Business\Repositories\AccountTypeRepository.cs" />
+    <Compile Include="Business\Repositories\CardRepository.cs" />
     <Compile Include="Business\Repositories\PreRegistrationRepository.cs" />
+    <Compile Include="Business\Repositories\RoleRepository.cs" />
+    <Compile Include="Business\Repositories\TokenRepository.cs" />
+    <Compile Include="Business\Repositories\TransactionRepository.cs" />
+    <Compile Include="Business\Repositories\UserRepository.cs" />
     <Compile Include="Business\Repository.cs" />
     <Compile Include="Business\IService.cs" />
+    <Compile Include="Business\Services\AccountService.cs" />
+    <Compile Include="Business\Services\AccountTypeService.cs" />
+    <Compile Include="Business\Services\CardService.cs" />
     <Compile Include="Business\Services\PreRegistrationService.cs" />
+    <Compile Include="Business\Services\RoleService.cs" />
+    <Compile Include="Business\Services\TokenService.cs" />
+    <Compile Include="Business\Services\TransactionService.cs" />
+    <Compile Include="Business\Services\UserService.cs" />
     <Compile Include="Entities\Account.cs">
       <DependentUpon>FakeBankModel.tt</DependentUpon>
     </Compile>
@@ -84,6 +98,9 @@
     <Compile Include="Entities\Card.cs">
       <DependentUpon>FakeBankModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Entities\C__MigrationHistory.cs">
+      <DependentUpon>FakeBankModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Entities\FakeBankModel.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -102,12 +119,19 @@
     <Compile Include="Entities\PreRegistration.cs">
       <DependentUpon>FakeBankModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Entities\sysdiagram.cs">
+      <DependentUpon>FakeBankModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Entities\Token.cs">
       <DependentUpon>FakeBankModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Entities\Transaction.cs">
       <DependentUpon>FakeBankModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Entities\TransactionType.cs">
+      <DependentUpon>FakeBankModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ExtensionMethods.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

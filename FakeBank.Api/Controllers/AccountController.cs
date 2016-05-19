@@ -1,34 +1,28 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Net.Http;
-using System.Security.Claims;
-using System.Security.Cryptography;
 using System.Threading.Tasks;
-using System.Web;
 using System.Web.Http;
-using System.Web.Http.ModelBinding;
+using System.Web.Http.Results;
+using FakeBank.Api.Models;
+using FakeBank.Controllers;
+using FakeBank.Data.Business.Repositories;
+using FakeBank.Data.Business.Services;
+using FakeBank.Data.Entities;
+using FakeBank.Models;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using Microsoft.Owin.Security.Cookies;
-using Microsoft.Owin.Security.OAuth;
-using FakeBankApi.Models;
-using FakeBank.Api.Providers;
-using FakeBank.Api.Results;
-using FakeBank.Api;
-using FakeBank.Models;
-using System.Web.Http.Results;
 
-namespace FakeBankApi.Controllers
+namespace FakeBank.Api.Controllers
 {
     [Authorize]
     [RoutePrefix("api/Account")]
-    public class AccountController : ApiController
+    public class AccountController : BaseAPIController
     {
         private const string LocalLoginProvider = "Local";
         private ApplicationUserManager _userManager;
-
         public AccountController()
         {
         }
@@ -152,8 +146,19 @@ namespace FakeBankApi.Controllers
             }
         }
 
+        [HttpGet]
+        [Authorize(Roles = "employee")]
+        [Route("GetByAccountId/{id}")]
+        public IHttpActionResult GetuserByIdAccount(string id)
+        {
+            var userService = new UserService();
+            var account = userService.GetByAccountId(id);
+            return (account != null) ? (IHttpActionResult) Ok(TheModelFactory.Create(account)) : NotFound();
+        }
+
         // POST api/Account/Register
         [AllowAnonymous]
+        [Authorize(Roles = "employee")]
         [Route("Register")]
         public async Task<IHttpActionResult> Register(RegisterBindingModel model)
         {
@@ -161,19 +166,128 @@ namespace FakeBankApi.Controllers
             {
                 return BadRequest(ModelState);
             }
-
-            var user = new ApplicationUser() { UserName = model.Email, Email = model.Email };
-
-            IdentityResult result = await UserManager.CreateAsync(user, model.Password);
-
-            if (!result.Succeeded)
+            var preRegistrationService = new PreRegistrationService();
+            var preRegistration = preRegistrationService.GetById(model.IdPreRegistration);
+            var user = new ApplicationUser()
             {
+                UserName = preRegistration.UserName,
+                Email = preRegistration.Email,
+                PhoneNumber = preRegistration.PhoneNumber,
+                FirstSurname = preRegistration.FirstSurname,
+                SecondSurname = preRegistration.SecondSurname,
+                Gender = model.Gender,
+                Rfc = model.Rfc,
+                BirthDate = model.BirthDate
+            };
+            IdentityResult result = await UserManager.CreateAsync(user, model.Password);
+            if (!result.Succeeded)
                 return GetErrorResult(result);
+            var accountTypeService = new AccountTypeService();
+
+            var cardService = new CardService();
+            var accountService = new AccountService();
+            var tokenService = new TokenService();
+            var card = new Card
+            {
+                Id = Guid.NewGuid(),
+                Nip = new Random().Next(0000, 9999).ToString(),
+                ExpirationDate = DateTime.Now.Date.AddYears(3).ToString("MM/yy"),
+                SecurityCode = new Random().Next(000, 999),
+                CardType = 1,
+                CardNumber = Data.ExtensionMethods.Generate16DigitString(),
+                Active = true
+            };
+            var account = new Account
+            {
+                Id = card.Id,
+                BeginDate = DateTime.Now,
+                Balance = 5000,
+                IdAccountType = preRegistration.IdAccountType,
+                IdCustomer = user.Id,
+                Active = true
+            };
+            var accountType = accountTypeService.GetById(preRegistration.IdAccountType);
+            if (accountType.AccountType1)
+            {
+                var roleService = new RoleService();
+                var role = roleService.GetByName("moralperson");
+                if (role == null)
+                {
+                    var roleIdentity = new IdentityRole("moralperson");
+                    var aspNetRole = new AspNetRole { Id = roleIdentity.Id, Name = "moralperson" };
+
+                    var saved = roleService.Save(aspNetRole);
+                    if (!saved) return BadRequest();
+                    var roleResult = UserManager.AddToRole(user.Id, aspNetRole.Name);
+                    if (!roleResult.Succeeded) return BadRequest();
+
+                    var token = new Token
+                    {
+                        Id = account.Id,
+                        Token1 = Guid.NewGuid(),
+                        Active = true
+                    };
+                    var cardResult = cardService.Save(card);
+                    var accountResult = accountService.Save(account);
+                    var tokenResult = tokenService.Save(token);
+                    return (cardResult && accountResult && tokenResult) ? (IHttpActionResult)Ok() : InternalServerError();
+                }
+                else
+                {
+                    var roleResult = UserManager.AddToRole(user.Id, role.Name);
+                    if (!roleResult.Succeeded) return InternalServerError();
+                    var token = new Token
+                    {
+                        Id = account.Id,
+                        Token1 = Guid.NewGuid(),
+                        Active = true
+                    };
+                    var cardResult = cardService.Save(card);
+                    var accountResult = accountService.Save(account);
+                    var tokenResult = tokenService.Save(token);
+                    return (cardResult && accountResult && tokenResult) ? (IHttpActionResult)Ok() : InternalServerError();
+                }
             }
-
-            return Ok();
+            else
+            {
+                var roleService = new RoleService();
+                var role = roleService.GetByName("moralperson");
+                if (role == null)
+                {
+                    var roleIndetity = new IdentityRole("physicallperson");
+                    var aspNetRole = new AspNetRole { Id = roleIndetity.Id, Name = "moralperson" };
+                    var saved = roleService.Save(aspNetRole);
+                    if (!saved) return BadRequest();
+                    var roleResult = UserManager.AddToRole(user.Id, aspNetRole.Name);
+                    if (!roleResult.Succeeded) return BadRequest();
+                    var token = new Token
+                    {
+                        Id = account.Id,
+                        Token1 = Guid.NewGuid(),
+                        Active = true
+                    };
+                    var cardResult = cardService.Save(card);
+                    var accountResult = accountService.Save(account);
+                    var tokenResult = tokenService.Save(token);
+                    return (cardResult && accountResult && tokenResult) ? (IHttpActionResult) Ok() : InternalServerError();
+                }
+                else
+                {
+                    var roleResult = UserManager.AddToRole(user.Id, role.Name);
+                    if (!roleResult.Succeeded) return InternalServerError();
+                    var token = new Token
+                    {
+                        Id = account.Id,
+                        Token1 = Guid.NewGuid(),
+                        Active = true
+                    };
+                    var cardResult = cardService.Save(card);
+                    var accountResult = accountService.Save(account);
+                    var tokenResult = tokenService.Save(token);
+                    return(cardResult && accountResult && tokenResult) ? (IHttpActionResult)Ok() : InternalServerError();
+                }
+            }
         }
-
         protected override void Dispose(bool disposing)
         {
             if (disposing && _userManager != null)

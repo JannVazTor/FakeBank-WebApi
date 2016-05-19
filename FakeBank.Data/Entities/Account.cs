@@ -21,19 +21,20 @@ namespace FakeBank.Data.Entities
             this.Transactions1 = new HashSet<Transaction>();
         }
     
-        public System.Guid id { get; set; }
-        public System.DateTime beginDate { get; set; }
-        public double balance { get; set; }
-        public System.Guid accountType { get; set; }
-        public string idCustomer { get; set; }
+        public System.Guid Id { get; set; }
+        public System.DateTime BeginDate { get; set; }
+        public double Balance { get; set; }
+        public System.Guid IdAccountType { get; set; }
+        public string IdCustomer { get; set; }
+        public bool Active { get; set; }
     
-        public virtual AccountType AccountType1 { get; set; }
-        public virtual Card Card { get; set; }
+        public virtual AccountType AccountType { get; set; }
         public virtual AspNetUser AspNetUser { get; set; }
         public virtual Token Token { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Transaction> Transactions { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Transaction> Transactions1 { get; set; }
+        public virtual Card Card { get; set; }
     }
 }

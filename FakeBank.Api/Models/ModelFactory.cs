@@ -1,12 +1,11 @@
-﻿using FakeBank.Api;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
-using System.Web;
 using System.Web.Http.Routing;
+using FakeBank.Data.Entities;
 
-namespace FakeBank.Models
+namespace FakeBank.Api.Models
 {
     public class ModelFactory
     {
@@ -19,5 +18,96 @@ namespace FakeBank.Models
             _appUserManager = appUserManager;
         }
 
+        public List<TransactionsModel> Create(List<Transaction> transactions)
+        {
+            return transactions.Select(t => new TransactionsModel
+            {
+                Id = t.Id,
+                Date = t.Date,
+                IdSourceAccount = t.IdSourceAccount,
+                IdDestinationAccount = t.IdDestinationAccount,
+                Amount = t.Amount
+            }).ToList();
+        }
+
+        public AccountModel Create(Account account)
+        {
+            return new AccountModel
+            {
+                Id = account.Id,
+                BeginDate = account.BeginDate,
+                Balance = account.Balance,
+                Active = account.Active
+            };
+        }
+
+        public UserModel Create(AspNetUser user)
+        {
+            return new UserModel
+            {
+                Id = user.Id,
+                FirstSurname = user.FirstSurname,
+                SecondSurname = user.SecondSurname,
+                Rfc = user.Rfc,
+                BirthDate = user.BirthDate,
+                Active = user.Active,
+                Email = user.Email,
+                PhoneNumber = user.PhoneNumber,
+                UserName = user.UserName
+            };
+        }
+
+        public List<PreRegistrationModel> Create(List<PreRegistration> preRegistrations)
+        {
+            return preRegistrations.Select(p => new PreRegistrationModel
+            {
+                Id = p.Id.ToString(),
+                UserName = p.UserName,
+                Email = p.Email,
+                IdAccountType = p.IdAccountType.ToString(),
+                FirstSurname = p.FirstSurname,
+                SecondSurname = p.SecondSurname
+            }).ToList();
+        }
+
+        public class UserModel
+        {
+            public string Id { get; set; }
+            public string FirstSurname { get; set; }
+            public string SecondSurname { get; set; }
+            public string Rfc { get; set; }
+            public DateTime BirthDate { get; set; }
+            public bool Active { get; set; }
+            public string Email { get; set; }
+            public string PhoneNumber { get; set; }
+            public string UserName { get; set; }
+        }
+
+        public class PreRegistrationModel
+        {
+            public string Id { get; set; }
+            public string UserName { get; set; }
+            public string Email { get; set; }
+            public string IdAccountType { get; set; }
+            public string FirstSurname { get; set; }
+            public string SecondSurname { get; set; }
+        }
+
+        public class TransactionsModel
+        {
+            public Guid Id { get; set; }
+            public DateTime Date { get; set; }
+            public Guid IdSourceAccount { get; set; }
+            public Guid IdDestinationAccount { get; set; }
+            public double Amount { get; set; }
+        }
+
+        public class AccountModel
+        {
+            public Guid Id { get; set; }
+            public DateTime BeginDate { get; set; }
+            public double Balance { get; set; }
+            public bool Active { get; set; }
+        }
     }
 }

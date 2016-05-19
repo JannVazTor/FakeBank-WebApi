@@ -14,11 +14,13 @@ namespace FakeBank.Data.Entities
     
     public partial class Card
     {
-        public System.Guid id { get; set; }
-        public string nip { get; set; }
-        public System.DateTime expirationDate { get; set; }
-        public int securityCode { get; set; }
-        public int cardType { get; set; }
+        public System.Guid Id { get; set; }
+        public string Nip { get; set; }
+        public string ExpirationDate { get; set; }
+        public int SecurityCode { get; set; }
+        public int CardType { get; set; }
+        public string CardNumber { get; set; }
+        public bool Active { get; set; }
     
         public virtual Account Account { get; set; }
     }

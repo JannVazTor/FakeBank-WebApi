@@ -4,26 +4,29 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="d31a60e04ea44c7a83520e88a50dad85" Name="Diagram1">
-        <EntityTypeShape EntityType="FAKE_BANKModel.Account" Width="1.5" PointX="5.25" PointY="4.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="FAKE_BANKModel.AccountType" Width="1.5" PointX="3" PointY="1" IsExpanded="true" />
-        <EntityTypeShape EntityType="FAKE_BANKModel.AspNetRole" Width="1.5" PointX="0.75" PointY="5.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="FAKE_BANKModel.AspNetUserClaim" Width="1.5" PointX="5.25" PointY="9.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="FAKE_BANKModel.AspNetUserLogin" Width="1.5" PointX="5.25" PointY="12.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="FAKE_BANKModel.AspNetUser" Width="1.5" PointX="3" PointY="3.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="FAKE_BANKModel.Card" Width="1.5" PointX="3" PointY="10.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="FAKE_BANKModel.PreRegistration" Width="1.5" PointX="5.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="FAKE_BANKModel.Token" Width="1.5" PointX="7.5" PointY="4" IsExpanded="true" />
-        <EntityTypeShape EntityType="FAKE_BANKModel.Transaction" Width="1.5" PointX="7.5" PointY="6.25" IsExpanded="true" />
+      <Diagram DiagramId="fdf0c4b896d04a4aa72f6e6e75a12155" Name="Diagram1">
+        <EntityTypeShape EntityType="FAKE_BANKModel.C__MigrationHistory" Width="1.5" PointX="7.75" PointY="3.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="FAKE_BANKModel.Account" Width="1.5" PointX="3" PointY="6.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="FAKE_BANKModel.AccountType" Width="1.5" PointX="0.75" PointY="7.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="FAKE_BANKModel.AspNetRole" Width="1.5" PointX="1.5" PointY="15.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="FAKE_BANKModel.AspNetUserClaim" Width="1.5" PointX="3" PointY="3.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="FAKE_BANKModel.AspNetUserLogin" Width="1.5" PointX="3" PointY="18.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="FAKE_BANKModel.AspNetUser" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="FAKE_BANKModel.PreRegistration" Width="1.5" PointX="3" PointY="12.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="FAKE_BANKModel.sysdiagram" Width="1.5" PointX="7.75" PointY="6.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="FAKE_BANKModel.Token" Width="1.5" PointX="5.25" PointY="5.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="FAKE_BANKModel.Transaction" Width="1.5" PointX="5.25" PointY="8.125" IsExpanded="true" />
         <AssociationConnector Association="FAKE_BANKModel.fk_account_accountType" ManuallyRouted="false" />
-        <AssociationConnector Association="FAKE_BANKModel.fk_account_card" ManuallyRouted="false" />
         <AssociationConnector Association="FAKE_BANKModel.fk_customer_account" ManuallyRouted="false" />
         <AssociationConnector Association="FAKE_BANKModel.fk_token_account" ManuallyRouted="false" />
         <AssociationConnector Association="FAKE_BANKModel.fk_transactionD_account" ManuallyRouted="false" />
         <AssociationConnector Association="FAKE_BANKModel.fk_transactionS_account" ManuallyRouted="false" />
+        <AssociationConnector Association="FAKE_BANKModel.fk_accountType_preRegistration" ManuallyRouted="false" />
         <AssociationConnector Association="FAKE_BANKModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" ManuallyRouted="false" />
         <AssociationConnector Association="FAKE_BANKModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" ManuallyRouted="false" />
         <AssociationConnector Association="FAKE_BANKModel.AspNetUserRoles" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="FAKE_BANKModel.Card" Width="1.5" PointX="7.375" PointY="10" />
+        <AssociationConnector Association="FAKE_BANKModel.fk_account_card" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

@@ -24,11 +24,12 @@ namespace FakeBank.Data.Entities
         }
     
         public string Id { get; set; }
-        public string FirstLasName { get; set; }
-        public string SecondLastName { get; set; }
+        public string FirstSurname { get; set; }
+        public string SecondSurname { get; set; }
         public bool Gender { get; set; }
         public string Rfc { get; set; }
         public System.DateTime BirthDate { get; set; }
+        public bool Active { get; set; }
         public string Email { get; set; }
         public bool EmailConfirmed { get; set; }
         public string PasswordHash { get; set; }

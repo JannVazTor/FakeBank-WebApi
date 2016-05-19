@@ -9,29 +9,41 @@ using FakeBank.Models;
 using FakeBank.Data.Business.Repositories;
 using FakeBank.Data.Business.Services;
 using System.Web.Http.Results;
+using FakeBank.Controllers;
 
 namespace FakeBank.Api.Controllers
 {
     [RoutePrefix("api/preRegister")]
-    public class PreRegistrationController : ApiController
+    public class PreRegistrationController : BaseAPIController
     {
         [HttpPost]
+        [AllowAnonymous]
         public IHttpActionResult PostPreRegistration(PreRegistrationBindingModel model)
         {
             if (!ModelState.IsValid) return BadRequest(ModelState);
             var preRegistration = new PreRegistration
             {
-                id = model.id,
-                username = model.username,
-                firstLastName = model.firstLastName,
-                secondLastName = model.secondLastName,
-                phoneNumber = model.phoneNumber,
-                email = model.email
+                Id = model.Id,
+                UserName = model.UserName,
+                FirstSurname= model.FirstLastName,
+                SecondSurname= model.SecondLastName,
+                PhoneNumber = model.PhoneNumber,
+                Email = model.Email,
+                IdAccountType = model.IdAccounType
             };
             var preRegistrationService = new PreRegistrationService();
             var result = preRegistrationService.Save(preRegistration);
             if (!result) return new InternalServerErrorResult(this);
             return Ok();
+        }
+
+        [HttpGet]
+        [Authorize(Roles = "employee")]
+        public IHttpActionResult GetAllPreRegistrations()
+        {
+            var preRegistrationService = new PreRegistrationService();
+            var preRegistrations = preRegistrationService.GetAll();
+            return Ok(TheModelFactory.Create(preRegistrations));
         }
     }
 }

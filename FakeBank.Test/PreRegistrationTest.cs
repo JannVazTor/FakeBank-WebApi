@@ -12,12 +12,12 @@ namespace FakeBank.Test
         {
             var preRegistration = new PreRegistration
             {
-                id = Guid.NewGuid(),
-                username = "userName",
-                firstLastName = "firstlastname",
-                secondLastName = "secondlastname",
-                phoneNumber = "12312312312",
-                email = "email@gmail.com"
+                Id = Guid.NewGuid(),
+                UserName = "userName",
+                FirstSurname= "firstlastname",
+                SecondSurname= "secondlastname",
+                PhoneNumber = "12312312312",
+                Email = "email@gmail.com"
             };
             var preRegistrationService = new PreRegistrationService();
             var result = preRegistrationService.Save(preRegistration);

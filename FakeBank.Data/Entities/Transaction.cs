@@ -14,11 +14,12 @@ namespace FakeBank.Data.Entities
     
     public partial class Transaction
     {
-        public System.Guid id { get; set; }
-        public System.DateTime date { get; set; }
-        public System.Guid idSourceAccount { get; set; }
-        public System.Guid idDestinationAccount { get; set; }
-        public double amount { get; set; }
+        public System.Guid Id { get; set; }
+        public System.DateTime Date { get; set; }
+        public System.Guid IdSourceAccount { get; set; }
+        public System.Guid IdDestinationAccount { get; set; }
+        public double Amount { get; set; }
+        public int Type { get; set; }
     
         public virtual Account Account { get; set; }
         public virtual Account Account1 { get; set; }

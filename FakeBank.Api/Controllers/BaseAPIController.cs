@@ -8,6 +8,7 @@ using FakeBank.Models;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using FakeBank.Api;
+using FakeBank.Api.Models;
 
 namespace FakeBank.Controllers
 {

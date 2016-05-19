@@ -18,12 +18,15 @@ namespace FakeBank.Data.Entities
         public AccountType()
         {
             this.Accounts = new HashSet<Account>();
+            this.PreRegistrations = new HashSet<PreRegistration>();
         }
     
-        public System.Guid id { get; set; }
-        public string nameType { get; set; }
+        public System.Guid Id { get; set; }
+        public bool AccountType1 { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Account> Accounts { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<PreRegistration> PreRegistrations { get; set; }
     }
 }

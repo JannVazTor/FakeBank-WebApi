@@ -113,8 +113,7 @@ namespace FakeBank.Data.Business
         /// <param name="filterExpression">Expression which reduces the results quantity to one.</param>
         /// <param name="includeExpressions">Which navigation properties need to be included, null for no includes.</param>
         /// <returns></returns>
-        public TEntity SearchOne(Expression<Func<TEntity, bool>> filterExpression,
-            params Expression<Func<TEntity, object>>[] includeExpressions)
+        public TEntity SearchOne(Expression<Func<TEntity, bool>> filterExpression,params Expression<Func<TEntity, object>>[] includeExpressions)
         {
             IQueryable<TEntity> query = Context.Set<TEntity>();
 

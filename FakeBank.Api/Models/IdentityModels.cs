@@ -1,20 +1,20 @@
-﻿using System.Security.Claims;
+﻿using System;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
-using Microsoft.AspNet.Identity.Owin;
-using System;
 
-namespace FakeBank.Models
+namespace FakeBank.Api.Models
 {
     // You can add profile data for the user by adding more properties to your ApplicationUser class, please visit http://go.microsoft.com/fwlink/?LinkID=317594 to learn more.
     public class ApplicationUser : IdentityUser 
     {
-        public string FirstLasName { get; set; }
-        public string SecondLastName { get; set; }
+        public string FirstSurname{ get; set; }
+        public string SecondSurname { get; set; }
         public bool Gender { get; set; }
         public string Rfc { get; set; }
         public DateTime BirthDate { get; set; }
+        public bool Active { get; set; }
 
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager, string authenticationType)
         {

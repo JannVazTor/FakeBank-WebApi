@@ -1,4 +1,5 @@
 ﻿using System.Threading.Tasks;
+using FakeBank.Api.Models;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;

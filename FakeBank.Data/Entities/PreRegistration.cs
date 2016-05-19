@@ -14,11 +14,14 @@ namespace FakeBank.Data.Entities
     
     public partial class PreRegistration
     {
-        public System.Guid id { get; set; }
-        public string username { get; set; }
-        public string firstLastName { get; set; }
-        public string secondLastName { get; set; }
-        public string phoneNumber { get; set; }
-        public string email { get; set; }
+        public System.Guid Id { get; set; }
+        public string UserName { get; set; }
+        public string PhoneNumber { get; set; }
+        public string Email { get; set; }
+        public System.Guid IdAccountType { get; set; }
+        public string FirstSurname { get; set; }
+        public string SecondSurname { get; set; }
+    
+        public virtual AccountType AccountType { get; set; }
     }
 }
