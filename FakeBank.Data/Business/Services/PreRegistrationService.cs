@@ -65,7 +65,25 @@ namespace FakeBank.Data.Business.Services
                 using (var db = new FAKE_BANKEntities())
                 {
                     var preRegistrationRepository = new PreRegistrationRepository(db);
-                    return preRegistrationRepository.GetAll();
+                    return preRegistrationRepository.Search(p => p.Active);
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public bool Active(PreRegistration preRegistration,bool state)
+        {
+            try
+            {
+                using (var db = new FAKE_BANKEntities())
+                {
+                    db.PreRegistrations.Attach(preRegistration);
+                    preRegistration.Active = state;
+                    db.Entry(preRegistration).Property(a => a.Active).IsModified = true;
+                    return db.SaveChanges() >= 1;
                 }
             }
             catch (Exception ex)

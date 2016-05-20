@@ -60,6 +60,22 @@ namespace FakeBank.Data.Business.Services
                 throw ex;
             }
         }
-        
+
+        public Card GetByAccountId(string id)
+        {
+            try
+            {
+                var Id = Guid.Parse(id);
+                using (var db = new FAKE_BANKEntities())
+                {
+                    var cardRepository = new CardRepository(db);
+                    return cardRepository.SearchOne(c => c.Id == Id);
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
     }
 }

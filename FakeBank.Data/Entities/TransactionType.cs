@@ -13,7 +13,7 @@ namespace FakeBank.Data.Entities
     
     public enum TransactionType : int
     {
-        ApiTransaction  = 1,
+        ApiTransaction = 1,
         Transaction = 2
     }
 }

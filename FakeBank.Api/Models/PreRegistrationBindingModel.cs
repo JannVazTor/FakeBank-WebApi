@@ -9,8 +9,6 @@ namespace FakeBank.Models
     public class PreRegistrationBindingModel
     {
         [Required]
-        public System.Guid Id { get; set; }
-        [Required]
         public string UserName { get; set; }
         [Required]
         public string FirstLastName { get; set; }
@@ -21,6 +19,6 @@ namespace FakeBank.Models
         [Required]
         public string Email { get; set; }
         [Required]
-        public Guid IdAccounType { get; set; }
+        public Guid IdAccountType { get; set; }
     }
 }

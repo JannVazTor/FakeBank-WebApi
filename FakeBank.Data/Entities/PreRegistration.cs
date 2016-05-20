@@ -21,6 +21,7 @@ namespace FakeBank.Data.Entities
         public System.Guid IdAccountType { get; set; }
         public string FirstSurname { get; set; }
         public string SecondSurname { get; set; }
+        public bool Active { get; set; }
     
         public virtual AccountType AccountType { get; set; }
     }

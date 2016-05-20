@@ -93,6 +93,22 @@ namespace FakeBank.Data.Business.Services
             }
         }
 
+        public List<Account> GetAllByUserId(string id)
+        {
+            try
+            {
+                using (var db = new FAKE_BANKEntities())
+                {
+                    var accountRepository = new AccountRepository(db);
+                    return accountRepository.Search(a => a.IdCustomer == id);
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
         public bool UpdateBalance(Account accountSource,Account accountDestination, double amount)
         {
             try

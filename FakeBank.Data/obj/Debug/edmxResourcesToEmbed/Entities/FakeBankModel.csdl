@@ -104,6 +104,7 @@
     <NavigationProperty Name="AccountType" Relationship="Self.fk_accountType_preRegistration" FromRole="PreRegistration" ToRole="AccountType" />
     <Property Name="FirstSurname" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
     <Property Name="SecondSurname" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Active" Type="Boolean" Nullable="false" />
   </EntityType>
   <EntityType Name="sysdiagram">
     <Key>
@@ -136,6 +137,7 @@
     <NavigationProperty Name="Account" Relationship="Self.fk_transactionD_account" FromRole="Transactions" ToRole="Account" />
     <NavigationProperty Name="Account1" Relationship="Self.fk_transactionS_account" FromRole="Transactions" ToRole="Account" />
     <Property Name="Type" Type="Int32" Nullable="false" />
+    <Property Name="TransactionNumber" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="true" />
   </EntityType>
   <Association Name="fk_account_accountType">
     <End Role="AccountType" Type="Self.AccountType" Multiplicity="1">

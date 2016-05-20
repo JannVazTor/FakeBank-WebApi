@@ -26,24 +26,5 @@ namespace FakeBank.Data.Business.Services
                 throw ex;
             }
         }
-
-        public AspNetUser GetByAccountId(string id)
-        {
-            try
-            {
-                using (var db = new FAKE_BANKEntities())
-                {
-                    var Id = Guid.Parse(id);
-                    var userRepository = new UserRepository(db);
-                    var accountRepository = new AccountRepository(db);
-                    var account = accountRepository.SearchOne(a => a.Id == Id);
-                    return userRepository.SearchOne(u => u.Id == account.IdCustomer);
-                }
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-        }
     }
 }

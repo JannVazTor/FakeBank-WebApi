@@ -59,5 +59,21 @@ namespace FakeBank.Data.Business.Services
                 throw ex;
             }
         }
+        public List<Transaction> GetByAccountId(string id)
+        {
+            try
+            {
+                var Id = Guid.Parse(id);
+                using (var db = new FAKE_BANKEntities())
+                {
+                    var transactionRepository = new TransactionRepository(db);
+                    return transactionRepository.Search(a => a.IdSourceAccount == Id).ToList();
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
     }
 }

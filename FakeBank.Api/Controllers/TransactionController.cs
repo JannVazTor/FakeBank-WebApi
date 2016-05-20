@@ -41,18 +41,19 @@ namespace FakeBank.Api.Controllers
                 return BadRequest("La cuenta no tiene suficiente saldo.");
             var modified = accountService.UpdateBalance(accountSource, accountDestination, model.Amount);
             if (!modified) return InternalServerError();
-
-            var saved = transactionService.Save(new Transaction
+            var transaction = new Transaction
             {
                 Id = Guid.NewGuid(),
                 Date = DateTime.Now,
                 IdSourceAccount = accountSource.Id,
                 IdDestinationAccount = accountDestination.Id,
                 Amount = model.Amount,
-                Type = (int) TransactionType.ApiTransaction
-            });
+                Type = (int) TransactionType.ApiTransaction,
+                TransactionNumber = new Random().Next(0000, 9999).ToString()
+            };
+            var saved = transactionService.Save(transaction);
             if (!saved) return InternalServerError();
-            return Ok();
+            return Ok(transaction.TransactionNumber);
         }
 
         [HttpPost]
@@ -77,7 +78,8 @@ namespace FakeBank.Api.Controllers
                 IdSourceAccount = accountSource.Id,
                 IdDestinationAccount = accountDestination.Id,
                 Amount = model.Amount,
-                Type = (int)TransactionType.Transaction
+                Type = (int)TransactionType.Transaction,
+                TransactionNumber = new Random().Next(0000, 9999).ToString()
             });
             if (!saved) return InternalServerError();
             return Ok();
@@ -85,11 +87,11 @@ namespace FakeBank.Api.Controllers
 
         [HttpGet]
         [Authorize(Roles= "employee,moralperson,physicallperson")]
-        [Route("GetByUser/{Id}")]
+        [Route("GetAllByAccount/{Id}")]
         public IHttpActionResult GetTransactionByUserId(string id)
         {
             var transactionService = new TransactionService();
-            var transactions = transactionService.GetByUserId(id);
+            var transactions = transactionService.GetByAccountId(id);
             return (transactions != null) ? (IHttpActionResult) Ok(TheModelFactory.Create(transactions)) : NotFound();
         }
     }

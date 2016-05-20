@@ -108,6 +108,7 @@
     <Property Name="PhoneNumber" Type="nvarchar" MaxLength="20" Nullable="false" />
     <Property Name="Email" Type="nvarchar" MaxLength="100" Nullable="false" />
     <Property Name="IdAccountType" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="Active" Type="bit" Nullable="false" />
   </EntityType>
   <EntityType Name="sysdiagrams">
     <Key>
@@ -137,6 +138,7 @@
     <Property Name="IdDestinationAccount" Type="uniqueidentifier" Nullable="false" />
     <Property Name="Amount" Type="float" Nullable="false" />
     <Property Name="Type" Type="int" Nullable="false" />
+    <Property Name="TransactionNumber" Type="nvarchar" MaxLength="10" Nullable="false" />
   </EntityType>
   <Association Name="fk_account_accountType">
     <End Role="AccountType" Type="Self.AccountType" Multiplicity="1">

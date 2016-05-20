@@ -23,13 +23,14 @@ namespace FakeBank.Api.Controllers
             if (!ModelState.IsValid) return BadRequest(ModelState);
             var preRegistration = new PreRegistration
             {
-                Id = model.Id,
+                Id = Guid.NewGuid(),
                 UserName = model.UserName,
                 FirstSurname= model.FirstLastName,
                 SecondSurname= model.SecondLastName,
                 PhoneNumber = model.PhoneNumber,
                 Email = model.Email,
-                IdAccountType = model.IdAccounType
+                IdAccountType = model.IdAccountType,
+                Active = true
             };
             var preRegistrationService = new PreRegistrationService();
             var result = preRegistrationService.Save(preRegistration);

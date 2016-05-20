@@ -148,12 +148,22 @@ namespace FakeBank.Api.Controllers
 
         [HttpGet]
         [Authorize(Roles = "employee")]
-        [Route("GetByAccountId/{id}")]
-        public IHttpActionResult GetuserByIdAccount(string id)
+        [Route("GetAll/{userId}")]
+        public IHttpActionResult GetuserByIdAccount(string userId)
         {
-            var userService = new UserService();
-            var account = userService.GetByAccountId(id);
-            return (account != null) ? (IHttpActionResult) Ok(TheModelFactory.Create(account)) : NotFound();
+            var accountService = new AccountService();
+            var accounts = accountService.GetAllByUserId(userId);
+            return (accounts != null) ? (IHttpActionResult) Ok(TheModelFactory.Create(accounts)) : NotFound();
+        }
+
+        [HttpGet]
+        [Authorize(Roles = "employee,moralperson,physicallperson")]
+        [Route("GetCard/{accountId}")]
+        public IHttpActionResult GetCardByAccountId(string accountId)
+        {
+            var cardService = new CardService();
+            var card = cardService.GetByAccountId(accountId);
+            return (card != null) ? (IHttpActionResult) Ok(TheModelFactory.Create(card)) : NotFound();
         }
 
         // POST api/Account/Register
@@ -168,7 +178,7 @@ namespace FakeBank.Api.Controllers
             }
             var preRegistrationService = new PreRegistrationService();
             var preRegistration = preRegistrationService.GetById(model.IdPreRegistration);
-            var user = new ApplicationUser()
+            var user = new ApplicationUser
             {
                 UserName = preRegistration.UserName,
                 Email = preRegistration.Email,
@@ -182,11 +192,16 @@ namespace FakeBank.Api.Controllers
             IdentityResult result = await UserManager.CreateAsync(user, model.Password);
             if (!result.Succeeded)
                 return GetErrorResult(result);
+
+            var modified = preRegistrationService.Active(preRegistration, false);
+            if (!modified) return InternalServerError();
+
             var accountTypeService = new AccountTypeService();
 
             var cardService = new CardService();
             var accountService = new AccountService();
             var tokenService = new TokenService();
+
             var card = new Card
             {
                 Id = Guid.NewGuid(),

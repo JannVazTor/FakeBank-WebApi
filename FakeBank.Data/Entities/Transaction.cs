@@ -20,6 +20,7 @@ namespace FakeBank.Data.Entities
         public System.Guid IdDestinationAccount { get; set; }
         public double Amount { get; set; }
         public int Type { get; set; }
+        public string TransactionNumber { get; set; }
     
         public virtual Account Account { get; set; }
         public virtual Account Account1 { get; set; }

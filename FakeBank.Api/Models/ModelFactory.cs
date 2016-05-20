@@ -30,6 +30,17 @@ namespace FakeBank.Api.Models
             }).ToList();
         }
 
+        public List<AccountModel> Create(List<Account> accounts)
+        {
+            return accounts.Select(a => new AccountModel
+            {
+                Id = a.Id,
+                BeginDate = a.BeginDate,
+                Balance = a.Balance,
+                Active = a.Active
+            }).ToList();
+        }
+
         public AccountModel Create(Account account)
         {
             return new AccountModel
@@ -68,6 +79,31 @@ namespace FakeBank.Api.Models
                 FirstSurname = p.FirstSurname,
                 SecondSurname = p.SecondSurname
             }).ToList();
+        }
+
+        public CardModel Create(Card card)
+        {
+            return new CardModel
+            {
+                Id = card.Id.ToString(),
+                Nip = card.Nip,
+                ExpirationDate = card.ExpirationDate,
+                SecurityCode = card.SecurityCode,
+                CardType = card.CardType,
+                CardNumber = card.CardNumber,
+                Active = card.Active
+            };
+        }
+
+        public class CardModel
+        {
+            public string Id { get; set; }
+            public string Nip { get; set; }
+            public string ExpirationDate { get; set; }
+            public int SecurityCode { get; set; }
+            public int CardType { get; set; }
+            public string CardNumber { get; set; }
+            public bool Active { get; set; }
         }
 
         public class UserModel
