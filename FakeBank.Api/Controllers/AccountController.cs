@@ -148,13 +148,38 @@ namespace FakeBank.Api.Controllers
         }
 
         [HttpGet]
-        [Authorize(Roles = "employee")]
-        [Route("GetAll/{userId}")]
-        public IHttpActionResult GetuserByIdAccount(string userId)
+        [Authorize(Roles = "employee,moralperson,physicalperson")]
+        [Route("GetAll")]
+        public IHttpActionResult GetuserByIdAccount()
         {
             var accountService = new AccountService();
+            var userId = User.Identity.GetUserId();
             var accounts = accountService.GetAllByUserId(userId);
             return (accounts != null) ? (IHttpActionResult) Ok(TheModelFactory.Create(accounts)) : NotFound();
+        }
+
+        [HttpGet]
+        [Authorize(Roles = "employee, moralperson, physicalperson")]
+        [Route("Token/{accountId}")]
+        public IHttpActionResult GetAccountToken(string accountId)
+        {
+            var tokenService = new TokenService();
+            var accountService = new AccountService();
+            var userId = User.Identity.GetUserId();
+            var account = accountService.GetById(accountId);
+            if (account.IdCustomer != userId) return BadRequest("La cuenta no pertenece al usuario loggeado.");
+            var token = tokenService.GetById(account.Id);
+            return (token != null) ? (IHttpActionResult) Ok(TheModelFactory.Create(token)) : NotFound();
+        }
+
+        [HttpGet]
+        [Authorize(Roles = "employee, moralperson, physicalperson")]
+        public IHttpActionResult GetBalanceByCardNumber()
+        {
+            var accountService = new AccountService();
+            var userId = User.Identity.GetUserId();
+            var account = accountService.GetByUserId(userId);
+            return (account != null) ? (IHttpActionResult) Ok(TheModelFactory.Create(account)) : NotFound();
         }
 
         [HttpGet]

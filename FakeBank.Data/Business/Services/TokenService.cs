@@ -76,5 +76,22 @@ namespace FakeBank.Data.Business.Services
                 throw ex;
             }
         }
+
+        public Token GetByAccountId(string id)
+        {
+            try
+            {
+                var Id = Guid.Parse(id);
+                using (var db = new FAKE_BANKEntities())
+                {
+                    var tokenRepository = new TokenRepository(db);
+                    return tokenRepository.SearchOne(t => t.Id == Id);
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
     }
 }

@@ -108,6 +108,22 @@ namespace FakeBank.Api.Models
             };
         }
 
+        public TokenModel Create(Token token)
+        {
+            return new TokenModel
+            {
+                Id = token.Id.ToString(),
+                Token = token.Token1.ToString(),
+                Active = token.Active
+            };
+        }
+
+        public class TokenModel
+        {
+            public string Id { get; set; }
+            public string Token { get; set; }
+            public bool Active { get; set; }
+        }
 
         public class CardModel
         {
