@@ -3,6 +3,7 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Results;
+using System.Web.ModelBinding;
 using FakeBank.Api.Models;
 using FakeBank.Controllers;
 using FakeBank.Data.Business.Repositories;
@@ -157,7 +158,7 @@ namespace FakeBank.Api.Controllers
         }
 
         [HttpGet]
-        [Authorize(Roles = "employee,moralperson,physicallperson")]
+        [Authorize(Roles = "employee,moralperson,physicalperson")]
         [Route("GetCard/{accountId}")]
         public IHttpActionResult GetCardByAccountId(string accountId)
         {
@@ -266,11 +267,11 @@ namespace FakeBank.Api.Controllers
             else
             {
                 var roleService = new RoleService();
-                var role = roleService.GetByName("moralperson");
+                var role = roleService.GetByName("physicalperson");
                 if (role == null)
                 {
-                    var roleIndetity = new IdentityRole("physicallperson");
-                    var aspNetRole = new AspNetRole { Id = roleIndetity.Id, Name = "moralperson" };
+                    var roleIndetity = new IdentityRole("physicalperson");
+                    var aspNetRole = new AspNetRole { Id = roleIndetity.Id, Name = "physicalperson" };
                     var saved = roleService.Save(aspNetRole);
                     if (!saved) return BadRequest();
                     var roleResult = UserManager.AddToRole(user.Id, aspNetRole.Name);

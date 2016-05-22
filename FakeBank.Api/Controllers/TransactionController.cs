@@ -57,7 +57,7 @@ namespace FakeBank.Api.Controllers
         }
 
         [HttpPost]
-        [Authorize(Roles = "employee,moralperson,physicallperson")]
+        [Authorize(Roles = "employee,moralperson,physicalperson")]
         [Route("Transfer")]
         public IHttpActionResult Transfer(TransferBindingModel model)
         {
@@ -86,7 +86,7 @@ namespace FakeBank.Api.Controllers
         }
 
         [HttpGet]
-        [Authorize(Roles= "employee,moralperson,physicallperson")]
+        [Authorize(Roles= "employee,moralperson,physicalperson")]
         [Route("GetAllByAccount/{Id}")]
         public IHttpActionResult GetTransactionByUserId(string id)
         {
