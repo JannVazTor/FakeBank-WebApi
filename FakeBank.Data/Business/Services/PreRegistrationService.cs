@@ -49,7 +49,8 @@ namespace FakeBank.Data.Business.Services
                 using (var db = new FAKE_BANKEntities())
                 {
                     var preRegistrationRepository = new PreRegistrationRepository(db);
-                    return preRegistrationRepository.GetById(id);
+                    return preRegistrationRepository.SearchOne(registration => registration.Id == id,
+                        registration => registration.AccountType);
                 }
             }
             catch (Exception ex)
@@ -65,7 +66,7 @@ namespace FakeBank.Data.Business.Services
                 using (var db = new FAKE_BANKEntities())
                 {
                     var preRegistrationRepository = new PreRegistrationRepository(db);
-                    return preRegistrationRepository.Search(p => p.Active);
+                    return preRegistrationRepository.Search(p => p.Active, null, registration => registration.AccountType);
                 }
             }
             catch (Exception ex)

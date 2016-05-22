@@ -46,5 +46,14 @@ namespace FakeBank.Api.Controllers
             var preRegistrations = preRegistrationService.GetAll();
             return Ok(TheModelFactory.Create(preRegistrations));
         }
+
+        [HttpGet]
+        [Authorize(Roles = "employee")]
+        public IHttpActionResult GetById(Guid id)
+        {
+            var service = new PreRegistrationService();
+            var preRegistration = service.GetById(id);
+            return Ok(TheModelFactory.Create(preRegistration));
+        }
     }
 }
