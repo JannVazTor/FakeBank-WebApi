@@ -75,7 +75,7 @@ namespace FakeBank.Api.Models
                 Id = p.Id.ToString(),
                 UserName = p.UserName,
                 Email = p.Email,
-                IdAccountType = p.IdAccountType.ToString(),
+                AccountType = p.AccountType.AccountType1,
                 FirstSurname = p.FirstSurname,
                 SecondSurname = p.SecondSurname
             }).ToList();
@@ -94,6 +94,20 @@ namespace FakeBank.Api.Models
                 Active = card.Active
             };
         }
+
+        public PreRegistrationModel Create(PreRegistration preRegistration)
+        {
+            return new PreRegistrationModel
+            {
+                Id = preRegistration.Id.ToString(),
+                AccountType = preRegistration.AccountType.AccountType1,
+                UserName = preRegistration.UserName,
+                FirstSurname = preRegistration.FirstSurname,
+                SecondSurname = preRegistration.SecondSurname,
+                Email = preRegistration.Email
+            };
+        }
+
 
         public class CardModel
         {
@@ -124,7 +138,7 @@ namespace FakeBank.Api.Models
             public string Id { get; set; }
             public string UserName { get; set; }
             public string Email { get; set; }
-            public string IdAccountType { get; set; }
+            public bool AccountType { get; set; }
             public string FirstSurname { get; set; }
             public string SecondSurname { get; set; }
         }
