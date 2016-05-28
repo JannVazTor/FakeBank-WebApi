@@ -20,11 +20,12 @@ namespace FakeBank.Api.Controllers
         {
             if (!ModelState.IsValid) return BadRequest();
 
+            if (model.Amount <= 0) return BadRequest("La cantidad no puede ser negativa o igual a cero.");
             var tokenService = new TokenService();
             var accountService = new AccountService();
             var cardService = new CardService();
             var transactionService = new TransactionService();
-
+            
             var token = tokenService.GetByToken(model.Token);
             if (token == null) return BadRequest("Token invalido.");
 
@@ -61,6 +62,7 @@ namespace FakeBank.Api.Controllers
         [Route("Transfer")]
         public IHttpActionResult Transfer(TransferBindingModel model)
         {
+            if (model.Amount <= 0) return BadRequest("La cantidad no puede ser negativa o igual a cero.");
             var cardService = new CardService();
             var accountService = new AccountService();
             var transactionService = new TransactionService();
