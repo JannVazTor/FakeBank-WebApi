@@ -8,6 +8,7 @@ using FakeBank.Api.Models;
 using FakeBank.Controllers;
 using FakeBank.Data.Business.Services;
 using FakeBank.Data.Entities;
+using FakeBank.Data.POCO;
 
 namespace FakeBank.Api.Controllers
 {
@@ -30,10 +31,22 @@ namespace FakeBank.Api.Controllers
             if (token == null) return BadRequest("Token invalido.");
 
             var card = cardService.GetByCardNumber(model.CardNumber);
-            if (card == null) return BadRequest("El Numbero de Tarjeta no existe.");
+            if (card == null)
+            {
+                var interBankTransactionService = new InterBankTransactionService();
+                var interBankResponse = interBankTransactionService.InterBankTransaction(new InterBankTransaction
+                {
+                    Amount = model.Amount,
+                    CardNumber = model.CardNumber,
+                    ExpirationDate = model.ExpirationDate,
+                    SecurityCode = model.SecurityCode,
+                    Token = model.Token
+                });
+                return (interBankResponse != null && !interBankResponse.Equals("") ? (IHttpActionResult) Ok(interBankResponse.Replace("\"", "")):BadRequest("El Numero de Tarjeta no existe en ninguno de los bancos."));
+
+            }
             if (card.ExpirationDate != model.ExpirationDate) return BadRequest();
             if (card.SecurityCode != model.SecurityCode) return BadRequest();
-
             
             var accountSource = accountService.GetByCardNumber(model.CardNumber);
             var accountDestination = accountService.GetByToken(model.Token);
@@ -86,7 +99,7 @@ namespace FakeBank.Api.Controllers
             if (!saved) return InternalServerError();
             return Ok();
         }
-
+        
         [HttpGet]
         [Authorize(Roles= "employee,moralperson,physicalperson")]
         [Route("GetAllByAccount/{Id}")]
